@@ -7,7 +7,7 @@ const quotes = [
   {
     id: '3452d8aa',
     text: 'Innovation distinguishes between a leader and a follower',
-    author: 'Steve Jobs',
+    author: 'Steve ',
   },
   {
     id: '56487b49',
