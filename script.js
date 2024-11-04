@@ -4,8 +4,13 @@ const quoteElement = document.getElementById('quote');
 const generateBtn = document.getElementById('generate-btn');
 const favoriteBtn = document.getElementById('favorite-btn');
 const favoritesContainer = document.getElementById('favorites-container');
-
+let favoriteCard;
 let currentQuoteIndex;
+
+const toggleFavoriteIcon = (isFavorite) => {
+  favoriteBtn.classList.toggle('fa', isFavorite);
+  favoriteBtn.classList.toggle('far', !isFavorite);
+};
 
 function generateRandomQuote() {
   currentQuoteIndex = Math.floor(Math.random() * quotes.length);
@@ -15,14 +20,16 @@ function generateRandomQuote() {
   // const { quote, author} = randomQuote;
   quoteElement.textContent = randomQuote.quote;
   quoteAuthorElement.textContent = randomQuote.author;
-  favoriteBtn.innerHTML = randomQuote.isFavorite ? '&#9733;' : '&#9734;';
+  toggleFavoriteIcon(randomQuote.isFavorite);
+  // favoriteBtn.innerHTML = randomQuote.isFavorite ? '&#9733;' : '&#9734;';
   favoriteBtn.style.display = 'inline-block';
 }
 
 function toggleFavorite() {
   const currentQuote = quotes[currentQuoteIndex];
   currentQuote.isFavorite = !currentQuote.isFavorite;
-  favoriteBtn.innerHTML = currentQuote.isFavorite ? '&#9733;' : '&#9734;';
+  toggleFavoriteIcon(currentQuote.isFavorite);
+  // favoriteBtn.innerHTML = currentQuote.isFavorite ? '&#9733;' : '&#9734;';
 
   if (currentQuote.isFavorite) {
     const favoriteCard = document.createElement('div');
@@ -31,10 +38,16 @@ function toggleFavorite() {
   <p class="author"> ${currentQuote.author}</p>
   <button class="remove-star">&#9733;</button>`;
 
+    console.log(quotes);
+
     favoriteCard.querySelector('.remove-star').addEventListener('click', () => {
       currentQuote.isFavorite = false;
-      favoriteBtn.innerHTML = '&#9734;'; // Возвращаем кнопку в состояние "не избранное"
-      favoriteCard.remove(); // Удаляем карточку из избранного
+      if (quotes[currentQuoteIndex] === currentQuote) {
+        favoriteBtn.classList.toggle('far');
+      }
+
+      favoriteCard.remove();
+      console.log(quotes); // Удаляем карточку из избранного
     });
 
     favoritesContainer.appendChild(favoriteCard);
@@ -52,4 +65,4 @@ function toggleFavorite() {
 
 generateBtn.addEventListener('click', generateRandomQuote);
 favoriteBtn.addEventListener('click', toggleFavorite);
-// generateRandomQuote();
+generateRandomQuote();
