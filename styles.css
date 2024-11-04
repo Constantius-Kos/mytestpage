@@ -46,15 +46,23 @@ body {
 }
 
 .star-btn:hover {
-  color: darkorange; /* Цвет при наведении */
+  color: darkorange;
 }
+
 .star {
-  font-size: 2em; /* Увеличьте размер звезды */
-  line-height: 1; /* Убираем влияние высоты строки на кнопку */
-  margin-left: 5px; /* Отступ слева для разделения с текстом (если есть текст) */
+  font-size: 2em;
+  line-height: 1;
+  margin-left: 5px;
   transform: scale(2);
 }
 
+.star-icon {
+  display: none;
+  font-size: 30px;
+  color: yellow;
+  vertical-align: middle;
+  cursor: pointer;
+}
 .favorites-container {
   display: flex;
   flex-direction: row;
