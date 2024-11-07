@@ -1,50 +1,11 @@
-import quotes from './src/quotes.js';
-import {
-  toggleFavoriteIcon,
-  showFavoriteCard,
-  hideFavoriteCard,
-} from './src/favoritesHandler.js';
-import { generateRandomInt } from './src/utils.js';
-const quoteAuthorElement = document.getElementById('author');
-const quoteElement = document.getElementById('quote');
+import { handleQuote } from './src/handlers/quote.js';
+
 const generateBtn = document.getElementById('generate-btn');
-const favoriteBtn = document.getElementById('favorite-btn');
-const favoritesContainer = document.getElementById('favorites-container');
-
-let currentQuoteIndex;
-
-function generateRandomQuote() {
-  console.log(quotes);
-  const randomIndex = generateRandomInt(quotes.length);
-  const { quote, author, isFavorite } = quotes[randomIndex];
-  currentQuoteIndex = randomIndex;
-
-  quoteElement.textContent = quote;
-  quoteAuthorElement.textContent = author;
-  toggleFavoriteIcon(isFavorite, favoriteBtn);
-
-  favoriteBtn.style.display = 'inline-block';
-}
-
-function toggleFavorite() {
-  const currentQuote = quotes[currentQuoteIndex];
-  currentQuote.isFavorite = !currentQuote.isFavorite;
-  toggleFavoriteIcon(currentQuote.isFavorite, favoriteBtn);
-
-  if (currentQuote.isFavorite) {
-    showFavoriteCard(currentQuote, favoritesContainer);
-  } else {
-    hideFavoriteCard(currentQuote);
-  }
-}
-
-generateBtn.addEventListener('click', generateRandomQuote);
-favoriteBtn.addEventListener('click', toggleFavorite);
-generateRandomQuote();
+generateBtn.addEventListener('click', handleQuote);
 
 // const toggleFavoriteIcon = (isFavorite) => {                           //Экспортированные функции
-//   favoriteBtn.classList.toggle('fa', isFavorite);
-//   favoriteBtn.classList.toggle('far', !isFavorite);
+//   toggleBtn.classList.toggle('fa', isFavorite);
+//   toggleBtn.classList.toggle('far', !isFavorite);
 // };
 
 // function showFavoriteCard(currentQuote) {                              //экспортированные функции

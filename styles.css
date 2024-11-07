@@ -32,7 +32,7 @@ body {
 .quote::after {
   content: '"'; /* Закрывающая кавычка */
 }
-.star-btn {
+/* .star-btn {
   background-color: transparent;
   border: none;
   font-size: 3em;
@@ -43,21 +43,20 @@ body {
   top: 7px;
   left: 1px;
   display: none;
-}
+} */
 
-.star-btn:hover {
+/* .star-btn:hover {
   color: darkorange;
-}
+} */
 
-.star {
+/* .star {
   font-size: 2em;
   line-height: 1;
   margin-left: 5px;
   transform: scale(2);
-}
+} */
 
 .star-icon {
-  display: none;
   font-size: 30px;
   color: yellow;
   vertical-align: middle;
