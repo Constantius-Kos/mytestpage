@@ -1,29 +1,15 @@
+import quotes from './src/data/quotes.js';
 import { handleQuote } from './src/handlers/quote.js';
 
+let currentQuote = null;
+
+function setCurrentQuote(quote) {
+  currentQuote = quote;
+}
+
 const generateBtn = document.getElementById('generate-btn');
-generateBtn.addEventListener('click', handleQuote);
+generateBtn.addEventListener('click', () =>
+  handleQuote(quotes, setCurrentQuote)
+);
 
-// const toggleFavoriteIcon = (isFavorite) => {                           //Экспортированные функции
-//   toggleBtn.classList.toggle('fa', isFavorite);
-//   toggleBtn.classList.toggle('far', !isFavorite);
-// };
-
-// function showFavoriteCard(currentQuote) {                              //экспортированные функции
-//   const favoriteCard = document.createElement('div');
-//   favoriteCard.classList.add('favorite-card');
-//   favoriteCard.innerHTML = `<p>${currentQuote.quote}</p>
-// <p class="author"> ${currentQuote.author}</p>
-// <button class="remove-star">&#9733;</button>`;
-
-//   favoritesContainer.appendChild(favoriteCard);
-// }
-
-// function hideFavoriteCard(quote) {                                    //экспортированные функции
-//   const favoriteCard = document.querySelectorAll('.favorite-card');
-//   const processFavoriteCard = (card) => {
-//     if (card.textContent.includes(quote.quote)) {
-//       card.remove();
-//     }
-//   };
-//   favoriteCard.forEach(processFavoriteCard);
-// }
+export { currentQuote };
