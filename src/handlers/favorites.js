@@ -2,15 +2,15 @@ import { favoriteBtn } from '../../index.js';
 
 function toggleFavorite(quote, btn, container) {
   quote.isFavorite = !quote.isFavorite;
-  const { text, author, isFavorite } = quote;
 
-  toggleFavoriteBtnIcon(isFavorite, btn);
+  toggleFavoriteBtnIcon(quote.isFavorite, btn);
 
-  if (isFavorite) {
-    showFavoriteCard(text, author, container);
+  if (quote.isFavorite) {
+    showFavoriteCard(quote, container);
   } else {
-    hideFavoriteCard(text);
+    hideFavoriteCard(quote.id);
   }
+  console.log(quote);
 }
 
 function handleFavorite(isFavorite) {
@@ -31,9 +31,11 @@ function hideFavoriteBtn(btn) {
   btn.style.display = 'none';
 }
 
-function showFavoriteCard(text, author, container) {
+function showFavoriteCard(quote, container) {
+  const { id, text, author } = quote;
   const favoriteCard = document.createElement('div');
   favoriteCard.classList.add('favorite-card');
+  favoriteCard.dataset.quoteId = id;
   favoriteCard.innerHTML = `<p>${text}</p>
 <p class="author"> ${author}</p>
 <button class="remove-star">&#9733;</button>`;
@@ -41,13 +43,10 @@ function showFavoriteCard(text, author, container) {
   container.appendChild(favoriteCard);
 }
 
-function hideFavoriteCard(text) {
-  const favoriteCard = document.querySelectorAll('.favorite-card');
-  const processFavoriteCard = (card) => {
-    if (card.textContent.includes(text)) {
-      card.remove();
-    }
-  };
-  favoriteCard.forEach(processFavoriteCard);
+function hideFavoriteCard(id) {
+  const card = document.querySelector(`.favorite-card[data-quote-id="${id}"]`);
+  if (card) {
+    card.remove();
+  }
 }
 export { handleFavorite, toggleFavorite, hideFavoriteBtn };
