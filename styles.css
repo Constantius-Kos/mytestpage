@@ -57,6 +57,7 @@ body {
 } */
 
 .star-icon {
+  display: none;
   font-size: 30px;
   color: yellow;
   vertical-align: middle;
