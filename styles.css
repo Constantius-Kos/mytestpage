@@ -6,8 +6,12 @@ body {
 
 .container {
   max-width: 600px;
-  margin: 50px auto;
+  margin: 30px auto;
   text-align: center;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
 }
 
 .btn {
@@ -21,47 +25,42 @@ body {
   border: 1px solid gold;
 }
 
-.btn:hover {
+.btn-primary {
+  background-color: #001429;
+}
+.btn-primary:hover {
   background-color: #0056b3;
 }
 
-.quote {
-  font-style: italic;
+.btn-delete {
+  background-color: transparent;
+  color: red;
+  border: 2px solid red;
 }
-.quote::before,
-.quote::after {
+.quote-text {
+  font-style: italic;
+  font-size: 1.2em;
+  min-height: 2.3em;
+  margin-block-end: 0.5em;
+}
+.quote-text::before,
+.quote-text::after {
   content: '"'; /* Закрывающая кавычка */
 }
-/* .star-btn {
-  background-color: transparent;
-  border: none;
-  font-size: 3em;
-  color: gold;
-  cursor: pointer;
-  padding: 10px;
-  position: relative;
-  top: 7px;
-  left: 1px;
-  display: none;
-} */
 
-/* .star-btn:hover {
-  color: darkorange;
-} */
-
-/* .star {
-  font-size: 2em;
-  line-height: 1;
-  margin-left: 5px;
-  transform: scale(2);
-} */
-
+.quote-author {
+  font-size: 1em;
+  margin-block-start: 0.5em;
+  margin-block-end: 1em;
+}
 .star-icon {
   display: none;
   font-size: 30px;
   color: yellow;
   vertical-align: middle;
   cursor: pointer;
+  margin-left: 10px;
+  margin-top: 5px;
 }
 .favorites-container {
   display: flex;
@@ -73,7 +72,7 @@ body {
 .favorite-card {
   position: relative;
   background-color: rgb(34, 33, 33);
-  padding: 5px 5px;
+  padding: 1px 10px;
   margin: 5px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -81,13 +80,23 @@ body {
   /* height: 250px; */
   border: 1px solid gold;
 }
-.author {
-  font-style: italic;
-}
 .favorite-card:hover {
   background-color: #353131;
   border: 1px solid yellowgreen;
 }
+
+.favorite-card-text {
+  font-style: italic;
+  font-size: 1.1em;
+}
+.favorite-card-text::before,
+.favorite-card-text::after {
+  content: '"'; /* Закрывающая кавычка */
+}
+.favorite-card-author {
+  font-size: 0.9em;
+}
+
 .remove-star {
   position: absolute;
   bottom: 1px;
