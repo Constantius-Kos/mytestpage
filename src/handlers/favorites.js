@@ -1,45 +1,21 @@
-import { quoteFavoriteBtn } from '../../index.js';
+import { quoteFavoriteBtn, removeFavoriteQuote } from '../../index.js';
 
-function toggleFavorite(quote, btn, container) {
-  quote.isFavorite = !quote.isFavorite;
-
-  toggleFavoriteBtnIcon(quote.isFavorite, btn);
-
-  if (quote.isFavorite) {
-    showFavoriteCard(quote, container);
-  } else {
-    removeFavoriteCard(quote.id);
-  }
+function toggleFavoriteCard(quote, container) {
+  quote.isFavorite
+    ? showFavoriteCard(quote, container)
+    : removeFavoriteCard(quote.id);
 }
 
-function handleFavorite(isFavorite) {
-  showFavoriteBtn();
-  toggleFavoriteBtnIcon(isFavorite);
-}
+function showFavoriteBtn(isFavorite) {
+  if (quoteFavoriteBtn.style.display === 'none')
+    quoteFavoriteBtn.style.display = 'inline-block';
 
-const toggleFavoriteBtnIcon = (isFavorite) => {
   quoteFavoriteBtn.classList.toggle('fa', isFavorite);
   quoteFavoriteBtn.classList.toggle('far', !isFavorite);
-};
-
-function showFavoriteBtn() {
-  quoteFavoriteBtn.style.display = 'inline-block';
 }
 
 function hideFavoriteBtn() {
   quoteFavoriteBtn.style.display = 'none';
-}
-
-function removeFavoriteQuote(quote) {
-  quote.isFavorite = false;
-  removeFavoriteCard(quote.id);
-
-  const currentQuote = document.querySelector('[data-current-quote-id]');
-  const currentQuoteId = currentQuote.dataset.currentQuoteId;
-
-  if (quote.id === currentQuoteId) {
-    toggleFavoriteBtnIcon(quote.isFavorite);
-  }
 }
 
 function showFavoriteCard(quote, container) {
@@ -53,7 +29,7 @@ function showFavoriteCard(quote, container) {
   container.appendChild(favoriteCard);
 
   const removeButton = favoriteCard.querySelector('.remove-star');
-  removeButton.addEventListener('click', () => removeFavoriteQuote(quote));
+  removeButton.addEventListener('click', () => removeFavoriteQuote(id));
 }
 
 function removeFavoriteCard(id) {
@@ -65,4 +41,10 @@ function removeFavoriteCard(id) {
   }
 }
 
-export { handleFavorite, toggleFavorite, hideFavoriteBtn };
+export {
+  toggleFavoriteCard,
+  hideFavoriteBtn,
+  showFavoriteCard,
+  showFavoriteBtn,
+  removeFavoriteCard,
+};

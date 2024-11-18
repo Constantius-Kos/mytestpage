@@ -1,23 +1,88 @@
-import quotes from './src/data/quotes.js';
-import { handleQuote } from './src/handlers/quote.js';
-import { toggleFavorite, hideFavoriteBtn } from './src/handlers/favorites.js';
-let currentQuote = null;
+import { displayCurrentQuote } from './src/handlers/currentQuote.js';
+import {
+  toggleFavoriteCard,
+  hideFavoriteBtn,
+  showFavoriteCard,
+  showFavoriteBtn,
+  removeFavoriteCard,
+} from './src/handlers/favorites.js';
+import {
+  localStorageSetItem,
+  localStorageGetItem,
+} from './src/utils/localStorage.js';
+import { getRandomQuote } from './src/handlers/randomQuote.js';
+import { removeObjectFromArrayById } from './src/utils/array.js';
 
-function setCurrentQuote(quote) {
-  currentQuote = quote;
+const CURRENT_QUOTE_KEY = 'currentQuote';
+const FAVORITE_QUOTES_KEY = 'favoriteQuotes';
+
+const randomQuoteBtn = document.getElementById('random-quote-btn');
+const quoteFavoriteBtn = document.getElementById('quote-favorite-btn');
+const favoritesContainer = document.getElementById('favorites-container');
+
+let currentQuote = null;
+const favoriteQuotes = [];
+window.addEventListener('load', init);
+
+function init() {
+  const favoriteQuotesFromStorage = localStorageGetItem(FAVORITE_QUOTES_KEY);
+  if (favoriteQuotesFromStorage) {
+    favoriteQuotesFromStorage.forEach((quote) => {
+      favoriteQuotes.push(quote);
+      showFavoriteCard(quote, favoritesContainer);
+    });
+  }
+  const currentQuoteFromStorage = localStorageGetItem(CURRENT_QUOTE_KEY);
+  if (currentQuoteFromStorage) {
+    setCurrentQuote(currentQuoteFromStorage);
+  }
 }
 
-const favoritesContainer = document.getElementById('favorites-container');
-const quoteFavoriteBtn = document.getElementById('quote-favorite-btn');
-quoteFavoriteBtn.addEventListener('click', () =>
-  toggleFavorite(currentQuote, quoteFavoriteBtn, favoritesContainer)
+randomQuoteBtn.addEventListener('click', () =>
+  setCurrentQuote(getRandomQuote())
 );
 
-const generateBtn = document.getElementById('generate-btn');
-generateBtn.addEventListener('click', () =>
-  handleQuote(quotes, setCurrentQuote)
-);
+function setCurrentQuote(quote) {
+  currentQuote = { ...quote };
+  currentQuote.isFavorite = !!favoriteQuotes.find(
+    (favoriteQuote) => favoriteQuote.id === currentQuote.id
+  );
+  displayCurrentQuote(currentQuote);
+  showFavoriteBtn(currentQuote.isFavorite);
+  localStorageSetItem(CURRENT_QUOTE_KEY, currentQuote);
+}
+
+quoteFavoriteBtn.addEventListener('click', toggleCurrentQuote);
+
+function toggleCurrentQuote() {
+  currentQuote.isFavorite = !currentQuote.isFavorite;
+
+  showFavoriteBtn(currentQuote.isFavorite);
+  localStorageSetItem(CURRENT_QUOTE_KEY, currentQuote);
+
+  if (currentQuote.isFavorite) {
+    favoriteQuotes.push({ ...currentQuote });
+  } else {
+    removeObjectFromArrayById(favoriteQuotes, currentQuote.id);
+  }
+  toggleFavoriteCard(currentQuote, favoritesContainer);
+  localStorageSetItem(FAVORITE_QUOTES_KEY, favoriteQuotes);
+}
+
+function removeFavoriteQuote(id) {
+  if (id === currentQuote.id) {
+    toggleCurrentQuote();
+  } else {
+    removeObjectFromArrayById(favoriteQuotes, id);
+
+    removeFavoriteCard(id);
+
+    localStorageSetItem(FAVORITE_QUOTES_KEY, favoriteQuotes);
+  }
+  // const currentQuote = document.querySelector('[data-current-quote-id]');
+  // const currentQuoteId = currentQuote.dataset.currentQuoteId;
+}
 
 hideFavoriteBtn();
 
-export { quoteFavoriteBtn };
+export { quoteFavoriteBtn, removeFavoriteQuote };
